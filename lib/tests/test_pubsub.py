@@ -4,12 +4,17 @@ from ..pubsub import PubSub
 
 
 class TestPubSub(TestCase):
-    pubSub = PubSub.instance
+    pubSub = PubSub()
     mock_function = MagicMock()
 
     def setUp(self):
         self.pubSub.subscribers["TEST"] = []
         self.pubSub.subscribe("TEST", self.mock_function)
+
+    def test_singleton(self):
+        ps1 = PubSub()
+        ps2 = PubSub()
+        self.assertEqual(ps1, ps2)
 
     def test_subscribe(self):
         self.assertTrue("TEST" in self.pubSub.subscribers)

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "WRITE_QUOTE_FILE",
+    "date": "2019-05-10 10:00",
+    "data": {
+      "author": "Hello World!",
+      "quote": "Bonjour"
+    }
+  },
+  {
+    "name": "WRITE_QUOTE_FILE",
+    "date": "2020-01-01 13:30",
+    "data": {
+      "author": "Auth",
+      "quote": "Quo"
+    }
+  },
+  {
+    "name": "PRINT_CONSOLE",
+    "date": "2013-03-10 15:00",
+    "data": {
+      "message": "Hello world !"
+    }
+  },
+  {
+    "name": "PRINT_CONSOLE",
+    "date": "2038-01-01 00:00",
+    "data": {
+      "message": "Should not be printed"
+    }
+  }
+]

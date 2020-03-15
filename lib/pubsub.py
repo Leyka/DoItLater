@@ -1,14 +1,17 @@
-class PubSub:
+from __future__ import annotations
+
+
+class PubSubMeta(type):
+    # Singleton of PubSub class
     _instance = None
 
-    @staticmethod
-    @property
-    def instance(self):
-        # Singleton
-        if not PubSub._instance:
-            PubSub._instance = PubSub()
-        return PubSub._instance
+    def __call__(cls) -> PubSub:
+        if cls._instance is None:
+            cls._instance = super().__call__()
+        return cls._instance
 
+
+class PubSub(metaclass=PubSubMeta):
     def __init__(self):
         self.subscribers = {}
 

@@ -6,7 +6,6 @@ import time
 
 
 class Scheduler:
-    _pubSub = PubSub.instance
 
     def __init__(self, waitSec: int, events: [Event] = []):
         """
@@ -16,6 +15,7 @@ class Scheduler:
         self.waitSec = waitSec
         self._all_events = events
         self._active = True
+        self._pubSub = PubSub()
 
     @property
     def all_events(self):
@@ -38,7 +38,10 @@ class Scheduler:
          Infinite loop that publishes missed events between sleep time.
          Publishing events means executing them through a Publish-Subscribe pattern.
          """
+
         while self.active:
+            published_events = []
+
             if not self.all_events or len(self.all_events) == 0:
                 return
 
@@ -46,7 +49,11 @@ class Scheduler:
                 if event.date <= datetime.now():
                     # We missed an event, publish it
                     self._pubSub.publish(event.name, event.data)
-                    self.all_events.remove(event)
+                    published_events.append(event)
+
+            # Remove published events
+            for published_event in published_events:
+                self.all_events.remove(published_event)
 
             time.sleep(self.waitSec)
 

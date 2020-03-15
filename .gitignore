@@ -1,5 +1,8 @@
 .idea
 venv
+
+example/*.txt
+
 __pycache__
 *.py[cod]
 *$py.class

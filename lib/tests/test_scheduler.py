@@ -7,7 +7,7 @@ from ..event import Event
 
 
 class TestScheduler(TestCase):
-    pubSub = PubSub.instance
+    pubSub = PubSub()
 
     def setUp(self):
         self.mock_function = MagicMock()
