@@ -47,11 +47,10 @@ class Scheduler:
 
     def publish_missed_events(self):
         """
-        Infinite loop to publish missed events between sleep time (run on separate thread)
-        Publishing events meaning executing them through a Publish-Subscribe pattern.
-        """
+         Infinite loop to publish missed events between sleep time (run on separate thread)
+         Publishing events meaning executing them through a Publish-Subscribe pattern.
+         """
         while self.active:
-            print('Checking...')
             if not self.all_events or len(self.all_events) == 0:
                 return
 
