@@ -7,16 +7,15 @@ class TestPubSub(TestCase):
     pubSub = PubSub.instance
     mock_function = MagicMock()
 
-    def subscribe_mock_func(self):
+    def setUp(self):
+        self.pubSub.subscribers["TEST"] = []
         self.pubSub.subscribe("TEST", self.mock_function)
 
     def test_subscribe(self):
-        self.subscribe_mock_func()
         self.assertTrue("TEST" in self.pubSub.subscribers)
-        self.assertEqual(len(self.pubSub.subscribers["TEST"]), 1)
+        self.assertEqual(1, len(self.pubSub.subscribers["TEST"]))
 
     def test_publish(self):
-        self.subscribe_mock_func()
         self.pubSub.publish("TEST")
         self.mock_function.assert_called_once()
         self.pubSub.publish("TEST", (1, 2, 3))

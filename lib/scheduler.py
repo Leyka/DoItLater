@@ -10,8 +10,8 @@ class Scheduler:
 
     def __init__(self, waitSec: int, events: [Event] = []):
         """
-        Scheduler
         :param waitSec: Time to wait in seconds before next scan
+        :param events: List of events of type Event
         """
         self.waitSec = waitSec
         self._all_events = events
@@ -35,8 +35,8 @@ class Scheduler:
 
     def __publish_missed_events(self):
         """
-         Infinite loop to publish missed events between sleep time (run on separate thread)
-         Publishing events meaning executing them through a Publish-Subscribe pattern.
+         Infinite loop that publishes missed events between sleep time.
+         Publishing events means executing them through a Publish-Subscribe pattern.
          """
         while self.active:
             if not self.all_events or len(self.all_events) == 0:
