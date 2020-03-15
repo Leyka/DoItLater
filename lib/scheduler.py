@@ -1,20 +1,8 @@
 from .pubsub import PubSub
 from datetime import datetime
 from .event import Event
+from threading import Thread
 import time
-
-"""
-PoC: Event Scanner and Publisher
-J'ai un systeme qui verifie toutes les 5 minutes
-si y a des événements à faire (comme publier une annonce kijiji)
-
-Scanner les événements à faire qui se sont passé dans les 5 minutes.
-Mettre les événements dans une Queue.
-Faire un système qui publie les événements (pubsub).
-
-1) Faire le programme normalement
-2) En faire une librairie générique
-"""
 
 
 class Scheduler:
@@ -45,7 +33,7 @@ class Scheduler:
     def active(self, state: bool):
         self._active = state
 
-    def publish_missed_events(self):
+    def __publish_missed_events(self):
         """
          Infinite loop to publish missed events between sleep time (run on separate thread)
          Publishing events meaning executing them through a Publish-Subscribe pattern.
@@ -61,3 +49,9 @@ class Scheduler:
                     self.all_events.remove(event)
 
             time.sleep(self.waitSec)
+
+    def publish_missed_events(self) -> Thread:
+        # Start infinite loop on a separate thread
+        t = Thread(target=self.__publish_missed_events)
+        t.start()
+        return t
